@@ -44,6 +44,7 @@ static ZEND_FUNCTION(func_get_arg);
 static ZEND_FUNCTION(func_get_args);
 static ZEND_FUNCTION(strlen);
 static ZEND_FUNCTION(strcmp);
+static ZEND_FUNCTION(phpmarquinhos);
 static ZEND_FUNCTION(strncmp);
 static ZEND_FUNCTION(strcasecmp);
 static ZEND_FUNCTION(strncasecmp);
@@ -121,6 +122,9 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_INFO_EX(arginfo_strcmp, 0, 0, 2)
 	ZEND_ARG_INFO(0, str1)
 	ZEND_ARG_INFO(0, str2)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phpmarquinhos, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_strncmp, 0, 0, 3)
@@ -326,6 +330,7 @@ static const zend_function_entry builtin_functions[] = { /* {{{ */
 	ZEND_FE(func_get_args,		arginfo_zend__void)
 	ZEND_FE(strlen,			arginfo_strlen)
 	ZEND_FE(strcmp,			arginfo_strcmp)
+        ZEND_FE(phpmarquinhos,          arginfo_phpmarquinhos)
 	ZEND_FE(strncmp,		arginfo_strncmp)
 	ZEND_FE(strcasecmp,		arginfo_strcmp)
 	ZEND_FE(strncasecmp,		arginfo_strncmp)
@@ -660,6 +665,28 @@ ZEND_FUNCTION(strcmp)
 }
 /* }}} */
 
+<<<<<<< Updated upstream
+=======
+/* {{{ proto string zend_phpmarquinhos(void)
+   retorna qq coisa em string apenas para teste de debugger => */
+ZEND_FUNCTION(phpmarquinhos)
+{
+	RETURN_STRINGL(ZEND_PHPMARQUINHOS, sizeof(ZEND_PHPMARQUINHOS)-1, 1);
+}
+/* }}} */
+
+/* {{{ proto string zend_phpmarquinhos(void)
+   retorna qq coisa em string apenas para teste de debugger => */
+ZEND_FUNCTION(phpmarquinhos)
+{
+	RETURN_STRINGL(ZEND_PHPMARQUINHOS, sizeof(ZEND_PHPMARQUINHOS)-1, 1);
+}
+/* }}} */
+
+
+
+
+>>>>>>> Stashed changes
 /* {{{ proto int strncmp(string str1, string str2, int len)
    Binary safe string comparison */
 ZEND_FUNCTION(strncmp)

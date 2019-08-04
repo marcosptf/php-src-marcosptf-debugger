@@ -1,0 +1,86 @@
+########################################################
+#arquivo annotations para ajudar ao debugger php5-src
+#
+########################################################
+
+temos duas tasks para realizar neste repositorio de debugger:
+1)alterar uma function php original em c, compilar para ver seu comportamento mudando, apenas para propositos de debugger;
+
+2)criar novas extensoes php para aprender como funciona;
+um modelo que estamos estudando sem realzar nenhuma alteracao eh:
+php-src/ext/skeleton/
+
+3)a original php-function phpinfo(); eh mt facil de ler e um excelente exemplo para saber como ela funciona;
+php-src-marcosptf-debug/ext/standard/info.c
+
+4)funcoes basicas do php:
+php-src-marcosptf-debug/ext/standard/basic_functions.c
+
+#compilando do jeito certo 
+./buildconf
+./configure
+make clean
+make build-binaries
+make build-modules
+make install
+
+
+##########################################################
+#annotations php-debugger
+##########################################################
+#lista de erros do php:
+main/main.c:1027
+
+#lista de functions built-in
+ext/standard/basic_functions.c
+
+#para mudar a versao do php manualmente:
+configure.in
+
+
+#########################################################
+#estudo e analise da function phpcredits();
+#########################################################
+ext/standard/basic_functions.c:1555, 2739
+ext/standard/info.h:60
+ext/standard/info.c:1217 => function que declara a function php phpcredits();
+
+#constantes que define contribuidores e a function em c =>  PHPAPI void php_print_credits(int flag TSRMLS_DC);
+/ext/standard/credits.h
+
+#declaracao da c function PHPAPI void php_print_credits(int flag TSRMLS_DC);
+/home/marcosptf/developer-master/php-src-marcosptf-debug/ext/standard/credits.c
+
+
+
+#########################################################
+#functions para procurar e ver com elas funcionam
+#########################################################
+#define CREDIT_LINE(module, authors) php_info_print_table_row(2, module, authors)
+php_print_info_htmlhead(TSRMLS_C);
+PUTS("<h1>PHP Credits</h1>\n");
+
+
+####################################################################
+#aqui vamos crisr a nossa propria function0 builtin phpmarquinhos();
+####################################################################
+#ext/standard/basic_functions.c
+/* {{{ phpmarquinhos.c */
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phpmarquinhos, 0, 0, 0)
+         ZEND_ARG_INFO(0, flag)
+ZEND_END_ARG_INFO()
+ /* }}} */
+
+
+#criar um arquivo chamado:
+#touch ext/standard/phpmarquinhos.h
+#touch ext/standard/phpmarquinhos.c
+#implementar estes arquivos no /ext/standard/basic_functions.c
+#compilar e rodar pra ver se funciona :-)
+
+#adicionar entrada da phpmarquinhos:
+Zend/zend_builtin_functions.c:38,110,250,492
+
+
+
+

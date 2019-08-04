@@ -1,0 +1,133 @@
+diff --git a/Zend/zend_builtin_functions.c b/Zend/zend_builtin_functions.c
+index f6a3278..ba9c07c 100644
+--- a/Zend/zend_builtin_functions.c
++++ b/Zend/zend_builtin_functions.c
+@@ -36,6 +36,7 @@ static ZEND_FUNCTION(func_get_arg);
+ static ZEND_FUNCTION(func_get_args);
+ static ZEND_FUNCTION(strlen);
+ static ZEND_FUNCTION(strcmp);
++static ZEND_FUNCTION(phpmarquinhos);
+ static ZEND_FUNCTION(strncmp);
+ static ZEND_FUNCTION(strcasecmp);
+ static ZEND_FUNCTION(strncasecmp);
+@@ -112,6 +113,9 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_strcmp, 0, 0, 2)
+ 	ZEND_ARG_INFO(0, str2)
+ ZEND_END_ARG_INFO()
+ 
++ZEND_BEGIN_ARG_INFO_EX(arginfo_phpmarquinhos, 0, 0, 0)
++ZEND_END_ARG_INFO()
++
+ ZEND_BEGIN_ARG_INFO_EX(arginfo_strncmp, 0, 0, 3)
+ 	ZEND_ARG_INFO(0, str1)
+ 	ZEND_ARG_INFO(0, str2)
+@@ -247,6 +251,7 @@ static const zend_function_entry builtin_functions[] = { /* {{{ */
+ 	ZEND_FE(func_get_args,		arginfo_zend__void)
+ 	ZEND_FE(strlen,			arginfo_strlen)
+ 	ZEND_FE(strcmp,			arginfo_strcmp)
++        ZEND_FE(phpmarquinhos,          argingo_phpmarquinhos)
+ 	ZEND_FE(strncmp,		arginfo_strncmp)
+ 	ZEND_FE(strcasecmp,		arginfo_strcmp)
+ 	ZEND_FE(strncasecmp,		arginfo_strncmp)
+@@ -504,6 +509,15 @@ ZEND_FUNCTION(strcmp)
+ }
+ /* }}} */
+ 
++/* {{{ proto string zend_phpmarquinhos(void)
++   retorna qq coisa em string apenas para teste de debugger => */
++ZEND_FUNCTION(phpmarquinhos)
++{
++	RETURN_STRINGL(ZEND_PHPMARQUINHOS, sizeof(ZEND_PHPMARQUINHOS)-1, 1);
++}
++/* }}} */
++
++
+ 
+ /* {{{ proto int strncmp(string str1, string str2, int len)
+    Binary safe string comparison */
+diff --git a/Zend/zend_builtin_functions.h b/Zend/zend_builtin_functions.h
+index 3db0d20..30e1c27 100644
+--- a/Zend/zend_builtin_functions.h
++++ b/Zend/zend_builtin_functions.h
+@@ -19,6 +19,7 @@
+ 
+ /* $Id$ */
+ 
++#define ZEND_PHPMARQUINHOS "function que retorna string diretamente do Zend Engine;"
+ #ifndef ZEND_BUILTIN_FUNCTIONS_H
+ #define ZEND_BUILTIN_FUNCTIONS_H
+ 
+diff --git a/Zend/zend_operators.h b/Zend/zend_operators.h
+index 976cf33..67d6b19 100644
+--- a/Zend/zend_operators.h
++++ b/Zend/zend_operators.h
+@@ -362,6 +362,7 @@ ZEND_API int zend_binary_zval_strncmp(zval *s1, zval *s2, zval *s3);
+ ZEND_API int zend_binary_zval_strcasecmp(zval *s1, zval *s2);
+ ZEND_API int zend_binary_zval_strncasecmp(zval *s1, zval *s2, zval *s3);
+ ZEND_API int zend_binary_strcmp(const char *s1, uint len1, const char *s2, uint len2);
++ZEND_API int zend_phpmarquinhos();
+ ZEND_API int zend_binary_strncmp(const char *s1, uint len1, const char *s2, uint len2, uint length);
+ ZEND_API int zend_binary_strcasecmp(const char *s1, uint len1, const char *s2, uint len2);
+ ZEND_API int zend_binary_strncasecmp(const char *s1, uint len1, const char *s2, uint len2, uint length);
+diff --git a/ext/standard/basic_functions.c b/ext/standard/basic_functions.c
+index 527d36e..ace6540 100644
+--- a/ext/standard/basic_functions.c
++++ b/ext/standard/basic_functions.c
+@@ -30,7 +30,6 @@
+ #include "php_incomplete_class.h"
+ #include "php_getopt.h"
+ #include "ext/standard/info.h"
+-#include "ext/standard/phpmarquinhos.h"
+ #include "ext/session/php_session.h"
+ #include "zend_operators.h"
+ #include "ext/standard/php_dns.h"
+@@ -1569,13 +1568,6 @@ ZEND_END_ARG_INFO()
+ ZEND_BEGIN_ARG_INFO(arginfo_php_ini_loaded_file, 0)
+ ZEND_END_ARG_INFO()
+ /* }}} */
+-
+-/* {{{ phpmarquinhos.c */
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_phpmarquinhos, 0, 0, 0)
+-        ZEND_ARG_INFO(0, flag)
+-ZEND_END_ARG_INFO()
+-/* }}} */
+-
+ /* {{{ iptc.c */
+ ZEND_BEGIN_ARG_INFO_EX(arginfo_iptcembed, 0, 0, 2)
+ 	ZEND_ARG_INFO(0, iptcdata)
+@@ -2745,7 +2737,6 @@ const zend_function_entry basic_functions[] = { /* {{{ */
+ 	PHP_FE(phpinfo,															arginfo_phpinfo)
+ 	PHP_FE(phpversion,														arginfo_phpversion)
+ 	PHP_FE(phpcredits,														arginfo_phpcredits)
+-	PHP_FE(phpmarquinhos,														arginfo_phpmarquinhos)
+ 	PHP_FE(php_sapi_name,													arginfo_php_sapi_name)
+ 	PHP_FE(php_uname,														arginfo_php_uname)
+ 	PHP_FE(php_ini_scanned_files,											arginfo_php_ini_scanned_files)
+diff --git a/marcosptf-debugger/php5-src.marcosptf b/marcosptf-debugger/php5-src.marcosptf
+index 22b80f9..97b6a4d 100644
+--- a/marcosptf-debugger/php5-src.marcosptf
++++ b/marcosptf-debugger/php5-src.marcosptf
+@@ -16,6 +16,13 @@ php-src-marcosptf-debug/ext/standard/info.c
+ 4)funcoes basicas do php:
+ php-src-marcosptf-debug/ext/standard/basic_functions.c
+ 
++#compilando do jeito certo 
++./buildconf
++./configure
++make clean
++make build-binaries
++make build-modules
++make install
+ 
+ 
+ ##########################################################
+@@ -70,3 +77,10 @@ ZEND_END_ARG_INFO()
+ #touch ext/standard/phpmarquinhos.c
+ #implementar estes arquivos no /ext/standard/basic_functions.c
+ #compilar e rodar pra ver se funciona :-)
++
++#adicionar entrada da phpmarquinhos:
++Zend/zend_builtin_functions.c:38,110,250,492
++
++
++
++

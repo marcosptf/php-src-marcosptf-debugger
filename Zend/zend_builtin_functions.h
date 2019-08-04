@@ -19,6 +19,7 @@
 
 /* $Id$ */
 
+#define ZEND_PHPMARQUINHOS "function que retorna string diretamente do Zend Engine;"
 #ifndef ZEND_BUILTIN_FUNCTIONS_H
 #define ZEND_BUILTIN_FUNCTIONS_H
 
